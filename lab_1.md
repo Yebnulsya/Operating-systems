@@ -391,6 +391,7 @@ thread calculator(computeFactorial, n);
 calculator.join();
 ```
 
+
 ---
 
 # Git
@@ -402,7 +403,7 @@ git commit -m "Initial commit"
 git status
 git log
 ```
-Метод `join()` заставляет главный поток ожидать завершения вычислений.
+
 
 ---
 
