@@ -193,7 +193,7 @@ g++ factorial.cpp -O3 -S -o factorial_O3.asm
 
 .text
 
-.globl  _Z9factoriali              // объявление глобальной функции
+.globl  _Z9factoriali              ; объявление глобальной функции
 .def    _Z9factoriali; .scl 2; .type 32; .endef
 
 .seh_proc   _Z9factoriali
@@ -201,68 +201,68 @@ g++ factorial.cpp -O3 -S -o factorial_O3.asm
 _Z9factoriali:
 .LFB0:
 
-    // ===== ПРОЛОГ ФУНКЦИИ =====
+    ; ===== ПРОЛОГ ФУНКЦИИ =====
 
-    pushq  %rbp                    // сохраняем старый базовый указатель
-    movq   %rsp, %rbp              // создаем новый стековый фрейм
-    subq   $16, %rsp               // выделяем память под локальные переменные
+    pushq  %rbp                    ; сохраняем старый базовый указатель
+    movq   %rsp, %rbp              ; создаем новый стековый фрейм
+    subq   $16, %rsp               ; выделяем память под локальные переменные
 
-    // сохраняем аргумент функции n
-    movl   %ecx, 16(%rbp)          // n -> стек
+    ; сохраняем аргумент функции n
+    movl   %ecx, 16(%rbp)          ; n -> стек
 
-    // ===== ПРОВЕРКА: if (n < 0) return 0 =====
+    ; ===== ПРОВЕРКА: if (n < 0) return 0 =====
 
-    cmpl   $0, 16(%rbp)            // сравниваем n и 0
-    jns    .L2                     // если n >= 0 → продолжаем
+    cmpl   $0, 16(%rbp)            ; сравниваем n и 0
+    jns    .L2                     ; если n >= 0 → продолжаем
 
-    movl   $0, %eax                // eax = 0 (результат)
-    jmp    .L3                     // переход к выходу
+    movl   $0, %eax                ; eax = 0 (результат)
+    jmp    .L3                     ; переход к выходу
 
 .L2:
 
-    // ===== ИНИЦИАЛИЗАЦИЯ =====
+    ; ===== ИНИЦИАЛИЗАЦИЯ =====
 
-    movq   $1, -8(%rbp)            // result = 1
-    movl   $1, -12(%rbp)           // i = 1
+    movq   $1, -8(%rbp)            ; result = 1
+    movl   $1, -12(%rbp)           ; i = 1
 
-    jmp    .L4                     // переход к проверке условия цикла
+    jmp    .L4                     ; переход к проверке условия цикла
 
 .L5:
 
-    // ===== ТЕЛО ЦИКЛА =====
+    ; ===== ТЕЛО ЦИКЛА =====
 
-    movl   -12(%rbp), %eax         // eax = i
-    cltq                            // преобразование int -> long long
+    movl   -12(%rbp), %eax         ; eax = i
+    cltq                            ; преобразование int -> long long
 
-    movq   -8(%rbp), %rdx          // rdx = result
+    movq   -8(%rbp), %rdx          ; rdx = result
 
-    imulq  %rdx, %rax              // rax = result * i
+    imulq  %rdx, %rax              ; rax = result * i
 
-    movq   %rax, -8(%rbp)          // result = result * i
+    movq   %rax, -8(%rbp)          ; result = result * i
 
-    addl   $1, -12(%rbp)           // i++
+    addl   $1, -12(%rbp)           ; i++
 
 .L4:
 
-    // ===== ПРОВЕРКА УСЛОВИЯ ЦИКЛА =====
+    ; ===== ПРОВЕРКА УСЛОВИЯ ЦИКЛА =====
 
-    movl   -12(%rbp), %eax         // eax = i
+    movl   -12(%rbp), %eax         ; eax = i
 
-    cmpl   16(%rbp), %eax          // сравниваем i и n
+    cmpl   16(%rbp), %eax          ; сравниваем i и n
 
-    jle    .L5                     // если i <= n → повторяем цикл
+    jle    .L5                     ; если i <= n → повторяем цикл
 
-    // ===== ВОЗВРАТ РЕЗУЛЬТАТА =====
+    ; ===== ВОЗВРАТ РЕЗУЛЬТАТА =====
 
-    movq   -8(%rbp), %rax          // загружаем result в регистр возврата
+    movq   -8(%rbp), %rax          ; загружаем result в регистр возврата
 
 .L3:
 
-    // ===== ЭПИЛОГ ФУНКЦИИ =====
+    ; ===== ЭПИЛОГ ФУНКЦИИ =====
 
-    addq   $16, %rsp               // освобождаем стек
-    popq   %rbp                    // восстанавливаем rbp
-    ret                            // выход из функции
+    addq   $16, %rsp               ; освобождаем стек
+    popq   %rbp                    ; восстанавливаем rbp
+    ret                            ; выход из функции
 ```
 
 ---
