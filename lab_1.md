@@ -390,7 +390,7 @@ thread calculator(computeFactorial, n);
 ```cpp
 calculator.join();
 ```
-
+Метод join() заставляет главный поток ожидать завершения вычислений.
 
 ---
 
